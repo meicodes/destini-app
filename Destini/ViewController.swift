@@ -2,9 +2,6 @@
 //  ViewController.swift
 //  Destini
 //
-//  Created by Philipp Muellauer on 01/09/2015.
-//  Copyright (c) 2015 London App Brewery. All rights reserved.
-//
 
 import UIKit
 
@@ -14,7 +11,6 @@ class ViewController: UIViewController {
     let story1 = "Your car has blown a tire on a winding road in the middle of nowhere with no cell phone reception. You decide to hitchhike. A rusty pickup truck rumbles to a stop next to you. A man with a wide brimmed hat with soulless eyes opens the passenger door for you and asks: \"Need a ride, boy?\"."
     let answer1a = "I\'ll hop in. Thanks for the help!"
     let answer1b = "Better ask him if he\'s a murderer first."
-    
     
     let story2 = "He nods slowly, unphased by the question."
     let answer2a = "At least he\'s honest. I\'ll climb in."
@@ -35,31 +31,74 @@ class ViewController: UIViewController {
     @IBOutlet weak var storyTextView: UILabel!
     
     // TODO Step 5: Initialise instance variables here
-    
-    
-    
+    var story : Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         // TODO Step 3: Set the text for the storyTextView, topButton, bottomButton, and to T1_Story, T1_Ans1, and T1_Ans2
-        
+        storyTextView.text = story1
+        topButton.setTitle(answer1a, for: .normal)
+        bottomButton.setTitle(answer1b, for: .normal)
     }
-
     
     // User presses one of the buttons
     @IBAction func buttonPressed(_ sender: UIButton) {
     
         // TODO Step 4: Write an IF-Statement to update the views
-                
-        // TODO Step 6: Modify the IF-Statement to complete the story
+        switch (story, sender.tag) {
+        case (1,1), (2,1):
+            story = 3
+        case (1,2):
+            story = 2
+        case (2,2):
+            story = 4
+        case (3,1):
+            story = 6
+        case (3,2):
+            story = 5
+        default:
+            story = 1
+        }
         
-    
+        updateUI()
     }
     
-
-
-
+    func restart() {
+        topButton.setTitle("Restart?", for: .normal)
+        bottomButton.isHidden = true
+    }
+    
+    func updateUI() {
+        switch story  {
+        case 1:
+            storyTextView.text = story1
+            topButton.setTitle(answer1a, for: .normal)
+            bottomButton.setTitle(answer1b, for: .normal)
+            bottomButton.isHidden = false
+        case 2:
+            storyTextView.text = story2
+            topButton.setTitle(answer2a, for: .normal)
+            bottomButton.setTitle(answer2b, for: .normal)
+            bottomButton.isHidden = false
+        case 3:
+            storyTextView.text = story3
+            topButton.setTitle(answer3a, for: .normal)
+            bottomButton.setTitle(answer3b, for: .normal)
+            bottomButton.isHidden = false
+        case 4:
+            storyTextView.text = story4
+            restart()
+        case 5:
+            storyTextView.text = story5
+            restart()
+        case 6:
+            storyTextView.text = story6
+            restart()
+        default:
+            storyTextView.text = story1
+            topButton.setTitle(answer1a, for: .normal)
+            bottomButton.setTitle(answer1b, for: .normal)
+        }
+    }
 }
-
